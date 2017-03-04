@@ -21,6 +21,14 @@ func TestSentence(t *testing.T) {
 
 }
 
+func TestSpaceSentence(t *testing.T) {
+	linesString := `  \  \  特殊 1 空白 6 * 0 * 0 NIL`
+	_, err := NewSentence(strings.Split(linesString, "\n"))
+	if err != nil {
+		t.Fatal(err)
+	}
+}
+
 func TestKnpSentence(t *testing.T) {
 	goldMorphemes := Morphemes{
 		&Morpheme{Surface: "パン", Pronunciation: "ぱん", RootForm: "パン",

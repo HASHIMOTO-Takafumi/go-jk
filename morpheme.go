@@ -26,9 +26,21 @@ type Morpheme struct {
 
 //NewMorpheme returns a morpheme for the given line
 func NewMorpheme(line string) (*Morpheme, error) {
-	mrph := new(Morpheme)
-	items := strings.SplitN(line, " ", 12)
+	var items []string
+	if strings.HasPrefix(line, `  \  \  `) {
+		items = make([]string, 12)
+		items[0] = " "
+		items[1] = " "
+		items[2] = " "
+		rest := strings.TrimPrefix(line, `  \  \  `)
+		for i, s := range strings.SplitN(rest, " ", 9) {
+			items[3+i] = s
+		}
+	} else {
+		items = strings.SplitN(line, " ", 12)
+	}
 
+	mrph := new(Morpheme)
 	mrph.Surface = items[0]
 	mrph.Pronunciation = items[1]
 	mrph.RootForm = items[2]
